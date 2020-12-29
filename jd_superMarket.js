@@ -326,11 +326,8 @@ async function businessCircleActivity() {
       console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
       if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
         let Teams = [
-          {
-            "teamId": "-4msulYas0O2JsRhE-2TA5XZmBQ_1604247312176",
-            "inviteCode": "-4msulYas0O2JsRhE-2TA5XZmBQ"
-          },
-        ]
+          {"teamId":"eU9Yar-xYvQv-G6Ew3BG3g_1609172689106","inviteCode":"U9Yar-xYvQv-G6Ew3BG3g"}
+        ];
         Teams = $.updatePkActivityIdRes['Teams'] || Teams;
         const randomNum = randomNumber(0, Teams.length);
 
