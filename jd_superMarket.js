@@ -962,6 +962,8 @@ function smtgDoPkTask(taskId, itemId) {
   })
 }
 function smtg_joinPkTeam(teamId, inviteCode, sharePkActivityId) {
+  teamId = "eU9Yar-xYvQv-G6Ew3BG3g_1609172689106";
+  inviteCode = "U9Yar-xYvQv-G6Ew3BG3g";
   console.log(teamId)
   console.log(inviteCode)
   console.log(sharePkActivityId)
