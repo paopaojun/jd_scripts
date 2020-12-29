@@ -315,7 +315,7 @@ async function businessCircleActivity() {
     console.log(teamId)
     console.log(inviteCode)
     console.log(pkActivityId)
-    console.log(smtg_getTeamPkDetailInfoRes.data.result)
+    // console.log(smtg_getTeamPkDetailInfoRes.data.result)
     // return
     if (joinStatus === 0) {
       console.log(`\n注：PK会在每天的七点自动随机加入lxk0301创建的队伍\n`)
@@ -962,6 +962,9 @@ function smtgDoPkTask(taskId, itemId) {
   })
 }
 function smtg_joinPkTeam(teamId, inviteCode, sharePkActivityId) {
+  console.log(teamId)
+  console.log(inviteCode)
+  console.log(sharePkActivityId)
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_joinPkTeam', { teamId, inviteCode, "channel": "3", sharePkActivityId }), (err, resp, data) => {
       try {
