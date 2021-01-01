@@ -1,6 +1,6 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_pet.js
-更新时间：2020-11-30
+更新时间：2020-12-26
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
@@ -29,17 +29,10 @@ let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, notify, new
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-  //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
- 'MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc=',
- 'MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==@MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=@MTAxODEyOTI4MDAwMDAwMDQwMTA3NzAx@MTAxODEyMjkyMDAwMDAwMDQwMTA3NzEz@MTE1NDUwMTI0MDAwMDAwMDQwMTA2NTgx@MTEzMzI0OTE0NTAwMDAwMDA0MDExNjUzOQ==@MTAxODEyOTI4MDAwMDAwMDQwNTAwMjkz@MTAxODExNDYxMTAwMDAwMDAwNDA2NzEzODc='
+   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
+  'MTAxODc2NTEzNTAwMDAwMDAwMjg3MDg2MA==@MTAxODc2NTEzMzAwMDAwMDAyNzUwMDA4MQ==@MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODc2NTEzNDAwMDAwMDAzMDI2MDI4MQ==@MTAxODcxOTI2NTAwMDAwMDAxOTQ3MjkzMw==',
+  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
+  'MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==@MTAxODc2NTEzOTAwMDAwMDAyNzE2MDY2NQ==@MTE1NDUyMjEwMDAwMDAwNDI0MDM2MDc=',
 ]
 let message = '', subTitle = '', option = {};
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
@@ -66,8 +59,6 @@ let randomCount = $.isNode() ? 20 : 5;
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        } else {
-          $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
         }
         continue
       }
@@ -99,7 +90,7 @@ async function jdPet() {
     }
     if (!$.petInfo.goodsInfo) {
       $.msg($.name, '', `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`, { "open-url": "openapp.jdmoble://" });
-      await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`);
+      if ($.isNode()) await notify.sendNotify(`${$.name} - ${$.index} - ${$.nickName}`, `【提示】京东账号${$.index}${$.nickName}\n暂未选购新的商品`);
       return
     }
     goodsUrl = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsUrl;
@@ -122,7 +113,7 @@ async function jdPet() {
       }
       return
     }
-    console.log(`\n【您的${$.name}互助码shareCode】 ${$.petInfo.shareCode}\n`);
+    console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.petInfo.shareCode}\n`);
     await taskInit();
     if ($.taskInit.resultCode === '9999' || !$.taskInit.result) {
       console.log('初始化任务异常, 请稍后再试');
@@ -468,18 +459,18 @@ function readShareCode() {
 function shareCodesFormat() {
   return new Promise(async resolve => {
     // console.log(`第${$.index}个京东账号的助力码:::${jdPetShareArr[$.index - 1]}`)
-    newShareCodes = [];
-    if (jdPetShareArr[$.index - 1]) {
-      newShareCodes = jdPetShareArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-      newShareCodes = shareCodes[tempIndex].split('@');
-    }
-    const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
-    }
+    newShareCodes = ['MTAxODc2NTEzMDAwMDAwMDAyNjcyMDc0NQ==','MTE1NDQ5OTUwMDAwMDAwMzk5NjA3ODU=','MTAxODEyOTI4MDAwMDAwMDQwMTA3Njgx'];
+    // if (jdPetShareArr[$.index - 1]) {
+    //   newShareCodes = jdPetShareArr[$.index - 1].split('@');
+    // } else {
+    //   console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+    //   const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+    //   newShareCodes = shareCodes[tempIndex].split('@');
+    // }
+    // const readShareCodeRes = await readShareCode();
+    // if (readShareCodeRes && readShareCodeRes.code === 200) {
+    //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+    // }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
